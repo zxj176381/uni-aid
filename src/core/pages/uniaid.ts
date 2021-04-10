@@ -12,7 +12,7 @@ export function getTabBar() {
       delete tab.text;
     })
   }
-  return tabBar
+  return tabBar || {}
 }
 
 // 获取 globalStyle

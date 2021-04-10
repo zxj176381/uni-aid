@@ -2,11 +2,13 @@ import { isCli } from "./path";
 
 export const SRC_PATH = isCli() ? 'src/' : '';
 export const UNIAID_PATH = SRC_PATH + '_uniaid/';
+export const PAGE_SUFFIX = ['.vue', '.nvue'];
 export const VUE_TPL = `<template>
   <view class="">
 
   </view>
 </template>
+
 <script>
 export default {
   data() {
@@ -14,8 +16,8 @@ export default {
   },
 }
 </script>
-<style>
+
+<style lang="scss" scoped>
 
 </style>
 `;
-

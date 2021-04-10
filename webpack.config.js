@@ -1,12 +1,12 @@
-const path = require('path')
-const nodeExternals = require('webpack-node-externals')
+const path = require('path');
+const nodeExternals = require('webpack-node-externals');
 
-const isProduction = process.env.NODE_ENV === 'production'
+const isProduction = process.env.NODE_ENV === 'production';
 
-let projectPath = 'E:/ajy-mini/yjy-app/node_modules/uni-aid/dist'
+let projectPath = 'E:/ajy-mini/yjy-app/node_modules/uni-aid/dist';
 
 if (process.env.ADDRESS === 'home') {
-  projectPath = 'F:/uni/uniapp/node_modules/_uni-aid@1.0.6@uni-aid/dist'
+  projectPath = 'F:/project/gjt-phone-app/node_modules/uni-aid/dist';
 }
 
 module.exports = {
@@ -23,7 +23,7 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: ['.tsx', '.ts', '.js'],
+    extensions: ['.ts', '.js'],
     alias: {
       '@': path.resolve(__dirname, './src'),
     },
@@ -34,4 +34,4 @@ module.exports = {
     libraryTarget: 'umd',
   },
   externals: [nodeExternals()],
-}
+};

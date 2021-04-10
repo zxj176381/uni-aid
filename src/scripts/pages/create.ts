@@ -1,6 +1,6 @@
 import fs from 'fs-extra';
 import { Answers } from "@/interface";
-import { getPagesJson, logSuccess, logWarn, SRC_PATH, VUE_TPL } from "@/shared";
+import { getPagesJson, logSuccess, logWarn, SRC_PATH, VUE_TPL, PAGE_SUFFIX } from "@/shared";
 import { createPageAlias, createServices, transformConfig } from '@/core';
 
 function createPage(answers: Answers){
@@ -71,8 +71,11 @@ function createComponent(answers: Answers){
       return
     }
   }
-  const componentPath = SRC_PATH + path + '.vue';
-  if(fs.existsSync(componentPath)) {
+  const componentPath = SRC_PATH + path;
+  const isExist = PAGE_SUFFIX.some(item => {
+    return fs.existsSync(componentPath + item) === true;
+  })
+  if(isExist) {
     logWarn(`【${componentPath}】此组件已存在`);
     return
   }

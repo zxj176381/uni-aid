@@ -1,13 +1,13 @@
 import fs from 'fs-extra';
 import { Pages } from "@/interface";
-import { hasOwn, logSuccess, SRC_PATH, UNIAID_PATH, VUE_TPL } from '@/shared';
+import { hasOwn, logSuccess, SRC_PATH, UNIAID_PATH, VUE_TPL, PAGE_SUFFIX } from '@/shared';
 import prettier from 'prettier';
 import { getGlobalStyle, getTabBar } from './uniaid';
 
 // create json vue helpers service
 export function createServices(pageConfig: Pages) {
   const pageJsonPath = SRC_PATH + pageConfig.path + '.json';
-  const pagePath = SRC_PATH + pageConfig.path + '.vue';
+  const pagePath = SRC_PATH + pageConfig.path;
   const pageHelperPath = SRC_PATH + pageConfig.path + '.js';
   const pageServicePath = SRC_PATH + pageConfig.path.replace('pages', 'service') + '.js';
   // create json
@@ -18,8 +18,11 @@ export function createServices(pageConfig: Pages) {
     logSuccess('create ' + pageJsonPath);
   }
   // create vue
-  if(!fs.existsSync(pagePath)) {
-    fs.outputFileSync(pagePath, VUE_TPL, 'utf-8')
+  const isExist = PAGE_SUFFIX.every(item => {
+    return fs.existsSync(pagePath + item) === false;
+  })
+  if(isExist) {
+    fs.outputFileSync(pagePath + PAGE_SUFFIX[0], VUE_TPL, 'utf-8')
     logSuccess('create ' + pagePath);
   }
   // create helpers
@@ -43,14 +46,13 @@ export function createPageAlias(pagesConfig: Array<Pages>) {
   pagesConfig.forEach(pageConfig => {
     if(hasOwn(pageConfig, '#home')) {
       pagesPath['HOME_PAGE'] = pageConfig.path;
-    }else {
-      if(hasOwn(pageConfig, '#tab')) {
-        pagesPath['TAB_LIST'].push(pageConfig.path);
-      }
-      const filterAlias = pageConfig.path.replace(/^pages\//, '').replace(/\/index$/, '');
-      const alias = filterAlias.split('/').join('_').toUpperCase();
-      pagesPath[alias] = pageConfig.path;
     }
+    if(hasOwn(pageConfig, '#tab')) {
+      pagesPath['TAB_LIST'].push(pageConfig.path);
+    }
+    const filterAlias = pageConfig.path.replace(/^pages\//, '').replace(/\/index$/, '');
+    const alias = filterAlias.split('/').join('_').toUpperCase();
+    pagesPath[alias] = pageConfig.path;
   })
   const aliasPath = SRC_PATH + 'routers/alias.js';
   let aliasTpl = `export default ${JSON.stringify(pagesPath)}`;

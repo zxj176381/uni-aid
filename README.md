@@ -1,15 +1,25 @@
-# uni-aid : 此套件仿 [vni](https://github.com/xiaoyucoding/vni)
+# uni-aid
 
 uni-aid: 一个用于提升 uni-app 开发体验的扩展套件。
 
-## 更新日志
-***
-#### 2021/01/14
+## 安装
 
-- 【新增】init 命令：创建页面、页面 json 配置、页面 helper.js、service 以及 routers/alias.js。
+```
+$ npm install uniaid --save-dev
+```
 
-#### 2021/01/15
+## 命令
 
-- 【新增】init 命令：创建 _uniaid 文件夹， 此文件夹为全局的配置。
-- 【新增】crate 命令：创建页面或者组件，支持分包。
-- 【新增】watch 命令：监听 json _uniaid 修改 pages.json 文件。
+```
+$ npx uniaid init  // 根据pages.json创建对应的文件目录以及路由。
+
+$ npx uniaid watch // 监听pages文件夹下json配置文件变化，修改pages.json中的配置。
+
+$ npx uniaid add // 创建页面或者组件
+```
+
+## 注意事项
+
+- **请忽略pages.json文件目录的修改，防止提交文件时冲突**
+- **生成为vue文件，如需要nvue请手动修改文件后缀**
+- **后期有时间再补充文档**

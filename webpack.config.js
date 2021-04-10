@@ -3,10 +3,10 @@ const nodeExternals = require('webpack-node-externals');
 
 const isProduction = process.env.NODE_ENV === 'production';
 
-let projectPath = 'E:/ajy-mini/yjy-app/node_modules/uni-aid/dist';
+let projectPath = '';
 
 if (process.env.ADDRESS === 'home') {
-  projectPath = 'F:/project/gjt-phone-app/node_modules/uni-aid/dist';
+  projectPath = 'F:/project/calligraphy-app-uniapp-dev/node_modules/uni-aid/dist';
 }
 
 module.exports = {
@@ -23,7 +23,7 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: ['.ts', '.js'],
+    extensions: ['.tsx', '.ts', '.js'],
     alias: {
       '@': path.resolve(__dirname, './src'),
     },

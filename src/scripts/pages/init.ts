@@ -6,9 +6,9 @@ function readPagesJson() {
   return transformConfig(pagesJsonContent);
 }
 
-let pagesConfig = readPagesJson();
 
 function createConfig() {
+  let pagesConfig = readPagesJson();
   pagesConfig.forEach(pageConfig => {
     createServices(pageConfig);
   })
@@ -16,6 +16,7 @@ function createConfig() {
 
 // 根据 page.json 创建对应的配置以及 services/routers/helpers 以及页面对应的 json 文件。
 export function init(){
+  let pagesConfig = readPagesJson();
   // create json/helper/service
   createConfig();
   // create alias

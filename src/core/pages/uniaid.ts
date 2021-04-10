@@ -1,9 +1,9 @@
 import { getPagesJson } from "@/shared";
 
-let pagesJsonContent = getPagesJson();
 
 // 获取 TabBar
 export function getTabBar() {
+  let pagesJsonContent = getPagesJson();
   const tabBar = pagesJsonContent.tabBar;
   if(tabBar) {
     tabBar.list.forEach(tab => {
@@ -17,6 +17,7 @@ export function getTabBar() {
 
 // 获取 globalStyle
 export function getGlobalStyle() {
+  let pagesJsonContent = getPagesJson();
   const globalStyle = pagesJsonContent.globalStyle;
   return globalStyle;
 }

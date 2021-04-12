@@ -14,6 +14,7 @@
   - `path`: 当前页面路径。
   - `style`: 同 `pages.json` 下每个页面对应的 `style`。[uni-app pages.style](https://uniapp.dcloud.io/collocation/pages?id=style)
   - `#home`: 首页标识，有且只能有一个，`npx uniaid init` 默认将 `pages.json` 中 `pages` 数组中的第一个页面设置为首页，在 `npm run watch` 下 `#home` 在哪个页面对应的JSON中，哪个页面就会在 `pages.json` 中的 `pages` 排第一个。
+  - `#subPackage`: `root` 分包目录。
   - `#tab`: 底部导航栏标识，配置有 `iconPath` 默认图标、 `selectedIconPath` 选中图标 和 `text` 标题。
   - `#config`: 新增相关配置，可根据需求加入。
     - `name`: 页面名称。

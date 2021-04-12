@@ -45,6 +45,14 @@ $ npx uniaid init
 ```bash
 # 创建新的页面或者组件
 $ npm run aid:add
+
+? 选择要创建的视图类型
+> 页面
+> 组件
+
+? 请输入视图目录名称 template/home
+
+? 是否为分包视图 （y/N）
 ```
 
 ::: tip 提示

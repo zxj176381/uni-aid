@@ -1,4 +1,5 @@
 module.exports = {
+  bash: '/uni-aid/',
   title: 'uni-aid',
   description: 'uni-app 开发套件',
   themeConfig: {

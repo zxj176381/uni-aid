@@ -24,7 +24,3 @@ export function init(){
   // create uniaid
   createUniaid();
 }
-
-export function cache(){
-
-}

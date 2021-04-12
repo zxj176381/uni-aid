@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack",
     "dev:home": "cross-env ADDRESS=home NODE_ENV=development webpack",
-    "build": "cross-env NODE_ENV=production webpack"
+    "build": "cross-env NODE_ENV=production webpack",
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs"
   },
   "files": [
     "dist",
@@ -27,8 +29,8 @@
     "@types/prettier": "^2.1.6",
     "ts-loader": "^8.0.14",
     "typescript-transform-paths": "^2.2.2",
-    "vuepress": "^1.8.0",
-    "webpack": "^5.31.2",
+    "vuepress": "^1.8.2",
+    "webpack": "^4.44.2",
     "webpack-cli": "^4.6.0",
     "webpack-node-externals": "^2.5.2"
   },

@@ -5,7 +5,7 @@ uni-aid: 一个用于提升 uni-app 开发体验的扩展套件。
 ## 安装
 
 ```
-$ npm install uniaid --save-dev
+$ npm install uni-aid --save-dev
 ```
 
 ## 命令

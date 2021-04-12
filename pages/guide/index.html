@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>介绍 | uni-aid</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    
+    <meta name="description" content="uni-app 开发套件">
+    
+    <link rel="preload" href="/uni-aid/assets/css/0.styles.4b073f7e.css" as="style"><link rel="preload" href="/uni-aid/assets/js/app.18a208e3.js" as="script"><link rel="preload" href="/uni-aid/assets/js/2.63386c67.js" as="script"><link rel="preload" href="/uni-aid/assets/js/8.3ddba89f.js" as="script"><link rel="prefetch" href="/uni-aid/assets/js/3.206ffb89.js"><link rel="prefetch" href="/uni-aid/assets/js/4.bcdb4231.js"><link rel="prefetch" href="/uni-aid/assets/js/5.56fbd158.js"><link rel="prefetch" href="/uni-aid/assets/js/6.888d89cd.js"><link rel="prefetch" href="/uni-aid/assets/js/7.484f9988.js"><link rel="prefetch" href="/uni-aid/assets/js/9.3e6294e1.js">
+    <link rel="stylesheet" href="/uni-aid/assets/css/0.styles.4b073f7e.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/uni-aid/" class="home-link router-link-active"><!----> <span class="site-name">uni-aid</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/uni-aid/pages/guide/" aria-current="page" class="nav-link router-link-exact-active router-link-active">
+  文档
+</a></div><div class="nav-item"><a href="/uni-aid/" class="nav-link">
+  GitHub
+</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/uni-aid/pages/guide/" aria-current="page" class="nav-link router-link-exact-active router-link-active">
+  文档
+</a></div><div class="nav-item"><a href="/uni-aid/" class="nav-link">
+  GitHub
+</a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>文档</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/uni-aid/pages/guide/" aria-current="page" class="active sidebar-link">介绍</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/uni-aid/pages/guide/#它是如何工作的" class="sidebar-link">它是如何工作的？</a></li><li class="sidebar-sub-header"><a href="/uni-aid/pages/guide/#快速上手" class="sidebar-link">快速上手</a></li><li class="sidebar-sub-header"><a href="/uni-aid/pages/guide/#目录结构" class="sidebar-link">目录结构</a></li></ul></li><li><a href="/uni-aid/pages/guide/dir-analyse.html" class="sidebar-link">目录分析</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="介绍"><a href="#介绍" class="header-anchor">#</a> 介绍</h1> <p>在使用 uni-app 框架开发时，当我们每添加一个页面都需要在 pages.json 添加一次，在团队开发时很容易冲突。并且在 <code>路由拦截</code> 和 <code>统计页面路径</code> 以及 <code>页面参数</code> 时相对比较麻烦， <code>uni-aid</code> 就是来帮助开发者做这些事情的。</p> <h2 id="它是如何工作的"><a href="#它是如何工作的" class="header-anchor">#</a> 它是如何工作的？</h2> <p>在 <code>uni-aid</code> 中开发者不用再去关注 pages.json 文件，uni-aid 会把 pages.json 配置拆分到每个页面目录下，生成一个 JSON 文件，开发者只需修改和关注页面目录下的 JSON 配置即可实时更新 pages.json。</p> <p>在此，建议开发者们在开发过程中使用 Git 忽略 pages.json 文件的修改和提交，团队中每个开发者的 pages.json 都由 uni-aid 帮助生成。</p> <h2 id="快速上手"><a href="#快速上手" class="header-anchor">#</a> 快速上手</h2> <div class="custom-block warning"><p class="custom-block-title">注意</p> <p>本文建议新创建一个 uni-aid 框架搭配学习 uni-aid。</p></div> <p><strong>1. 在 <code>package.json</code> 中添加一些 scripts</strong></p> <p>这一步骤是可选的，但我们推荐你完成它。在下文中，我们会默认这些 scripts 已经被添加。</p> <div class="language-json extra-class"><pre class="language-json"><code><span class="token punctuation">{</span>
+  <span class="token property">&quot;scripts&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">&quot;aid:add&quot;</span><span class="token operator">:</span> <span class="token string">&quot;npx uniaid add&quot;</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;aid:watch&quot;</span><span class="token operator">:</span> <span class="token string">&quot;npx uniaid watch&quot;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p><strong>2. 初始化页面目录配置</strong></p> <div class="custom-block danger"><p class="custom-block-title">警告</p> <ul><li>在第一次使用 uniaid 时，必须先使用 <code>npx uniaid init</code>。</li> <li>此命令主要时根据 pages.json 来创建目录的，<code>npx uniaid watch</code> 不可创建页面目录，并且在没有执行 <code>npx uniaid init</code> 前执行 <code>npx uniaid watch</code> 时，会发生不可预估的问题。</li></ul></div> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token comment"># 根据 pages.json 生成对应的页面目录以及页面配置。</span>
+$ npx uniaid init
+</code></pre></div><p><strong>3. 创建新的页面和组件</strong></p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token comment"># 创建新的页面或者组件</span>
+$ <span class="token function">npm</span> run aid:add
+
+? 选择要创建的视图类型
+<span class="token operator">&gt;</span> 页面
+<span class="token operator">&gt;</span> 组件
+
+? 请输入视图目录名称 template/home
+
+? 是否为分包视图 （y/N）
+</code></pre></div><div class="custom-block tip"><p class="custom-block-title">提示</p> <ul><li>创建页面或者组件时，要么不填写 <code>vue文件的名称</code>， 要么<code>.vue</code> 文件的名字务必是 <code>index</code>。</li> <li>页面路径建议 <code>pages/${PAGE_DIR}/index</code>，只需填写 <code>PAGE_DIR</code> 即可。
+例如：</li></ul> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token variable"><span class="token variable">`</span>/pages/template/home/index<span class="token variable">`</span></span> 对应 <span class="token variable"><span class="token variable">`</span>template/home<span class="token variable">`</span></span>
+</code></pre></div></div> <p><strong>4. 监听页面目录下 JSON 的文件和 _uniaid 文件夹下的 json 变化。</strong></p> <div class="language-bash extra-class"><pre class="language-bash"><code>$ <span class="token function">npm</span> run aid:watch
+</code></pre></div><ul><li>在这一步就可以把 pages.json 目录忽略了，因为你不再会去关注它或者去修改它。</li></ul> <h2 id="目录结构"><a href="#目录结构" class="header-anchor">#</a> 目录结构</h2> <div class="language-vue extra-class"><pre class="language-vue"><code>.
+├── src
+│  ├── _uniaid <span class="token comment">&lt;!-- 全局配置 --&gt;</span>
+│  │  ├── globalStyle.json
+│  │  └── tabBar.json
+│  │
+│  ├── pages
+│  │  ├── home
+│  │  │  ├── index.js <span class="token comment">&lt;!-- helper --&gt;</span>
+│  │  │  ├── index.json <span class="token comment">&lt;!-- 当前页面配置 --&gt;</span>
+│  │  │  └── index.vue <span class="token comment">&lt;!-- vue 页面 --&gt;</span>
+│  │  │
+│  │  └── personal
+│  │     ├── index.js
+│  │     ├── index.json
+│  │     └── index.vue
+│  │
+│  ├── routers <span class="token comment">&lt;!-- 路由 --&gt;</span>
+│  │  ├── alias.js <span class="token comment">&lt;!-- 所有页面的页面别名对应页面的路径 --&gt;</span>
+│  │  └── exclude.js <span class="token comment">&lt;!-- 路由权限权限管理 --&gt;</span>
+│  │
+│  └── service <span class="token comment">&lt;!-- 服务 --&gt;</span>
+│    ├── home
+│    │  └── index.js <span class="token comment">&lt;!-- home页的所有接口在此文件中 --&gt;</span>
+│    │
+│    └── personal
+│       └── index.js
+│
+└── package.json
+</code></pre></div></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><!----> <span class="next"><a href="/uni-aid/pages/guide/dir-analyse.html">
+        目录分析
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/uni-aid/assets/js/app.18a208e3.js" defer></script><script src="/uni-aid/assets/js/2.63386c67.js" defer></script><script src="/uni-aid/assets/js/8.3ddba89f.js" defer></script>
+  </body>
+</html>

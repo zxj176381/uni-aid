@@ -6,7 +6,7 @@ uni-aid 基于 uni-app 开发的一套路由套件，优化开发者的开发体
   <button class="goDoc">
     快速开始
   </button>
-</div>](/pages/guide)
+</div>](/uni-aid/pages/guide)
 
 ```bash
 # 安装

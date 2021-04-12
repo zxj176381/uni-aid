@@ -1,7 +1,8 @@
 import fs from 'fs-extra';
-import { Pages } from "@/interface";
-import { hasOwn, logSuccess, SRC_PATH, UNIAID_PATH, VUE_TPL, PAGE_SUFFIX } from '@/shared';
+import glob from 'glob';
 import prettier from 'prettier';
+import { Pages, Exclude } from "@/interface";
+import { hasOwn, logSuccess, SRC_PATH, UNIAID_PATH, VUE_TPL, PAGE_SUFFIX } from '@/shared';
 import { getGlobalStyle, getTabBar } from './uniaid';
 
 // create json vue helpers service
@@ -62,6 +63,33 @@ export function createPageAlias(pagesConfig: Array<Pages>) {
     parser: 'babel',
   });
   fs.outputFileSync(aliasPath, aliasTpl, 'utf-8');
+}
+
+// create routers/exclude.js
+export function createPageExclude() {
+  const routersFilesPath = glob.sync(SRC_PATH + '*pages/**/*.json');
+  let excludeList:Exclude = {
+    login: [],
+    phone: [],
+  };
+  routersFilesPath.forEach((item, index) => {
+    const pageBelowJson = fs.readFileSync(item, 'utf-8');
+    const excludeConfig = JSON.parse(pageBelowJson);
+    const exclude = excludeConfig['#config'].exclude;
+    const pagePath = excludeConfig.path;
+    if(exclude) {
+      // TODO: any 不能为索引，后期找到解决方案补充。
+      excludeList[exclude].push(pagePath);
+    }
+  })
+  let excludeTpl = `export default ${JSON.stringify(excludeList)}`;
+  const excludePath = SRC_PATH + 'routers/exclude.js';
+  excludeTpl = prettier.format(excludeTpl, {
+    tabWidth: 2,
+    singleQuote: true,
+    parser: 'babel',
+  });
+  fs.outputFileSync(excludePath, excludeTpl, 'utf-8');
 }
 
 // create uniaid

@@ -1,8 +1,8 @@
 import fs from 'fs-extra';
 import chokidar from 'chokidar';
 import glob from 'glob';
-import { getRoutersConfig, getUniaid } from "@/core";
-import { logInfo, logSuccess, SRC_PATH, UNIAID_PATH } from "@/shared";
+import { getRoutersConfig, getUniaid, createPageExclude, createPageAlias, transformConfig } from "@/core";
+import { getPagesJson, logInfo, logSuccess, SRC_PATH, UNIAID_PATH } from "@/shared";
 
 function getNewsPagesJson(routersFilesPath: Array<string>, uniaid: Array<string>) {
   const routersConfig = getRoutersConfig(routersFilesPath);
@@ -15,6 +15,18 @@ function getNewsPagesJson(routersFilesPath: Array<string>, uniaid: Array<string>
   })
 }
 
+function readPagesJson() {
+  const pagesJsonContent = getPagesJson();
+  return transformConfig(pagesJsonContent);
+}
+
+function watchJson(routersFilesPath: Array<string>, uniaid: Array<string>) {
+  getNewsPagesJson(routersFilesPath, uniaid);
+  createPageExclude();
+  let pagesConfig = readPagesJson();
+  createPageAlias(pagesConfig);
+}
+
 export function watch(){
   const uniaid = glob.sync(`${UNIAID_PATH}/*.json`);
   const routersFilesPath = glob.sync(SRC_PATH + '*pages/**/*.json');
@@ -24,24 +36,24 @@ export function watch(){
   watcher.on('ready', () => {
       isReady = true;
       logInfo('watcher is ready, waiting for changes...');
-      getNewsPagesJson(routersFilesPath, uniaid);
+      watchJson(routersFilesPath, uniaid);
     })
     .on('add', (path) => {
       if (isReady) {
         logSuccess('add [' + path + ']');
-        getNewsPagesJson(routersFilesPath, uniaid);
+        watchJson(routersFilesPath, uniaid);
       }
     })
     .on('change', (path) => {
       if (isReady) {
         logSuccess('change [' + path + ']');
-        getNewsPagesJson(routersFilesPath, uniaid);
+        watchJson(routersFilesPath, uniaid);
       }
     })
     .on('unlink', (path) => {
       if (isReady) {
         logSuccess('unlink [' + path + ']');
-        getNewsPagesJson(routersFilesPath, uniaid);
+        watchJson(routersFilesPath, uniaid);
       }
     });
 

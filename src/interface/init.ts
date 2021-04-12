@@ -29,3 +29,8 @@ export interface SubPackage {
   root: string;
   pages?: Array<Pages>;
 }
+
+export interface Exclude {
+  login?: Array<string>;
+  phone?: Array<string>;
+}

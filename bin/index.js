@@ -14,6 +14,10 @@ program.command('watch').action(() => {
   bundle.watch();
 });
 
+program.command('link').action(() => {
+  bundle.link();
+});
+
 program
   .command('add')
   .description('新建视图')

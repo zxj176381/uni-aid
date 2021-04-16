@@ -5,8 +5,6 @@ function createIndexJson(pagesJsonContent: SrcPagesJson) {
   let pages = pagesJsonContent.pages;
   let subPackages = pagesJsonContent.subPackages;
   let tabBar = pagesJsonContent.tabBar;
-  // #home
-  pages[0]['#home'] = true;
   // #subPackages
   if (subPackages && subPackages.length > 0) {
     let subPackagesPages: Array<Pages> = [];
@@ -28,8 +26,12 @@ function createIndexJson(pagesJsonContent: SrcPagesJson) {
   }
   // #tab
   if(tabBar && tabBar.list.length > 0) {
-    tabBar.list.forEach(tab => {
+    tabBar.list.forEach((tab, tIndex) => {
       pages.forEach(page => {
+        // #home
+        // if(tIndex === 0 && page.path === tab.pagePath) {
+        //   page['#home'] = true
+        // }
         if(page.path === tab.pagePath) {
           page['#tab'] = {
             iconPath: tab.iconPath,
@@ -39,6 +41,8 @@ function createIndexJson(pagesJsonContent: SrcPagesJson) {
         }
       })
     })
+  }else {
+    pages[0]['#home'] = true;
   }
   // #config
   pages.forEach(page => {

@@ -20,10 +20,28 @@ function readPagesJson() {
   return transformConfig(pagesJsonContent);
 }
 
-function watchJson(routersFilesPath: Array<string>, uniaid: Array<string>) {
-  getNewsPagesJson(routersFilesPath, uniaid);
-  createPageExclude();
+function removePage(path: Array<string>) {
+  let pagesJsonContent = getPagesJson();
+  let dirPath = path[0].replace('src/', '').replace('.json', '');
+  pagesJsonContent.pages.forEach((item, index) => {
+    if(item.path === dirPath) {
+      pagesJsonContent.pages.splice(index + 1, 1);
+    }
+  })
+  const pagesJsonPath = SRC_PATH + 'pages.json';
+  fs.outputJsonSync(pagesJsonPath, pagesJsonContent, {
+    spaces: 2,
+  })
+}
+
+function watchJson(routersFilesPath: Array<string>, uniaid: Array<string>, type: string) {
+  if(type === 'unlink') {
+    removePage(routersFilesPath);
+  }else {
+    getNewsPagesJson(routersFilesPath, uniaid);
+  }
   let pagesConfig = readPagesJson();
+  createPageExclude();
   createPageAlias(pagesConfig);
 }
 
@@ -36,24 +54,24 @@ export function watch(){
   watcher.on('ready', () => {
       isReady = true;
       logInfo('watcher is ready, waiting for changes...');
-      watchJson(routersFilesPath, uniaid);
+      watchJson(routersFilesPath, uniaid, '');
     })
     .on('add', (path) => {
       if (isReady) {
         logSuccess('add [' + path + ']');
-        watchJson(routersFilesPath, uniaid);
+        watchJson(routersFilesPath, uniaid, '');
       }
     })
     .on('change', (path) => {
       if (isReady) {
         logSuccess('change [' + path + ']');
-        watchJson(routersFilesPath, uniaid);
+        watchJson(routersFilesPath, uniaid, '');
       }
     })
     .on('unlink', (path) => {
       if (isReady) {
         logSuccess('unlink [' + path + ']');
-        watchJson(routersFilesPath, uniaid);
+        watchJson(routersFilesPath, uniaid, 'unlink');
       }
     });
 

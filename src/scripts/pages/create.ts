@@ -71,7 +71,7 @@ function createComponent(answers: Answers){
       return
     }
   }
-  const componentPath = SRC_PATH + path;
+  const componentPath = SRC_PATH + path + '.vue';
   const isExist = PAGE_SUFFIX.some(item => {
     return fs.existsSync(componentPath + item) === true;
   })

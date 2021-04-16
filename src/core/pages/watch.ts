@@ -15,19 +15,21 @@ export function getRoutersConfig(routersFilesPath: Array<string>) {
   })
   routersFiles.forEach(routerFile => {
     // #home
-    if(hasOwn(routerFile, '#home')) {
-      if(hasOwn(routerFile, '#tab')) {
-        const tab = {
-          ...routerFile['#tab'],
-          pagePath: routerFile.path
-        }
-        pagesJson.tabBar?.list.push(tab);
-        delete routerFile['#tab'];
+    if(hasOwn(routerFile, "#home")) {
+      if(!hasOwn(routerFile, "#tab")) {
+        delete routerFile['#home'];
+        delete routerFile['#config'];
+        pagesJson.pages.push(routerFile);
       }
-      delete routerFile['#home'];
+    }
+    if(hasOwn(routerFile, '#entrance')) {
+      delete routerFile['#entrance'];
       delete routerFile['#config'];
       pagesJson.pages.unshift(routerFile);
     }else if(hasOwn(routerFile, '#tab')) {
+      if(!hasOwn(routerFile, "#home")) {
+        delete routerFile['#home'];
+      }
       // #tab
       const tab = {
         ...routerFile['#tab'],

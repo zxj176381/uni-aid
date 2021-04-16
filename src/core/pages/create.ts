@@ -44,11 +44,11 @@ export function createPageAlias(pagesConfig: Array<Pages>) {
     HOME_PAGE: '',
     TAB_LIST: []
   };
-  pagesConfig.forEach(pageConfig => {
+  pagesConfig.forEach((pageConfig, index) => {
     if(hasOwn(pageConfig, '#home')) {
       pagesPath['HOME_PAGE'] = pageConfig.path;
-    }
-    if(hasOwn(pageConfig, '#tab')) {
+      pagesPath['TAB_LIST'].push(pageConfig.path);
+    }else if(hasOwn(pageConfig, '#tab')) {
       pagesPath['TAB_LIST'].push(pageConfig.path);
     }
     const filterAlias = pageConfig.path.replace(/^pages\//, '').replace(/\/index$/, '');

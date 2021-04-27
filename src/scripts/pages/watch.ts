@@ -25,7 +25,7 @@ function removePage(path: Array<string>) {
   let dirPath = path[0].replace('src/', '').replace('.json', '');
   pagesJsonContent.pages.forEach((item, index) => {
     if(item.path === dirPath) {
-      pagesJsonContent.pages.splice(index + 1, 1);
+      pagesJsonContent.pages.splice(index, 1);
     }
   })
   const pagesJsonPath = SRC_PATH + 'pages.json';
@@ -47,7 +47,7 @@ function watchJson(routersFilesPath: Array<string>, uniaid: Array<string>, type:
 
 export function watch(){
   const uniaid = glob.sync(`${UNIAID_PATH}/*.json`);
-  const routersFilesPath = glob.sync(SRC_PATH + '*pages/**/*.json');
+  let routersFilesPath = glob.sync(SRC_PATH + '*pages/**/*.json');
   const watcher = chokidar.watch([...routersFilesPath, ...uniaid]);
   let isReady = false;
 
@@ -58,6 +58,7 @@ export function watch(){
     })
     .on('add', (path) => {
       if (isReady) {
+        routersFilesPath = glob.sync(SRC_PATH + '*pages/**/*.json');
         logSuccess('add [' + path + ']');
         watchJson(routersFilesPath, uniaid, '');
       }

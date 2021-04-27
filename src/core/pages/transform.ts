@@ -29,9 +29,9 @@ function createIndexJson(pagesJsonContent: SrcPagesJson) {
     tabBar.list.forEach((tab, tIndex) => {
       pages.forEach(page => {
         // #home
-        // if(tIndex === 0 && page.path === tab.pagePath) {
-        //   page['#home'] = true
-        // }
+        if(tIndex === 0 && page.path === tab.pagePath) {
+          page['#home'] = true
+        }
         if(page.path === tab.pagePath) {
           page['#tab'] = {
             iconPath: tab.iconPath,

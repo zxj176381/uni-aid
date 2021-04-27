@@ -47,7 +47,7 @@ export function createPageAlias(pagesConfig: Array<Pages>) {
   pagesConfig.forEach((pageConfig, index) => {
     if(hasOwn(pageConfig, '#home')) {
       pagesPath['HOME_PAGE'] = pageConfig.path;
-      pagesPath['TAB_LIST'].push(pageConfig.path);
+      return;
     }else if(hasOwn(pageConfig, '#tab')) {
       pagesPath['TAB_LIST'].push(pageConfig.path);
     }

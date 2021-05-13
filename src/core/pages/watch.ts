@@ -26,6 +26,14 @@ export function getRoutersConfig(routersFilesPath: Array<string>) {
     } else if(hasOwn(routerFile, '#home')) {
       delete routerFile['#home'];
       delete routerFile['#config'];
+      if(hasOwn(routerFile, '#tab')) {
+        const tab = {
+          ...routerFile['#tab'],
+          pagePath: routerFile.path
+        }
+        pagesJson.tabBar?.list.push(tab);
+        delete routerFile['#tab'];
+      }
       if(hasEntrance) {
         pagesJson.pages.push(routerFile);
       }else {

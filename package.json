@@ -1,6 +1,6 @@
 {
   "name": "uni-aid",
-  "version": "2.0.15",
+  "version": "2.0.17",
   "description": "uniapp开发路由开发套件",
   "main": "dist/bundle.js",
   "scripts": {

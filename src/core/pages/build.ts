@@ -6,18 +6,11 @@ export function getRoutersConfig(routersFilesPath: Array<string>) {
   let pagesJson:any = {
     pages: [],
     subPackages: [],
-    tabBar: {
-      list: []
-    }
   }, routersFiles: Array<Pages> = [];
   routersFilesPath.forEach((routerFilePath) => {
     routersFiles.push(fs.readJsonSync(routerFilePath));
   })
-  let hasEntrance = false;
-  let entranceIndex = routersFiles.findIndex(routerFile => hasOwn(routerFile, '#entrance') === true);
-  if(~entranceIndex) {
-    hasEntrance = true;
-  }
+  let hasEntrance = routersFiles.findIndex(routerFile => hasOwn(routerFile, '#entrance') === true);
   routersFiles.forEach(routerFile => {
     if(hasOwn(routerFile, '#entrance')) {
       delete routerFile['#entrance'];
@@ -27,11 +20,6 @@ export function getRoutersConfig(routersFilesPath: Array<string>) {
       delete routerFile['#home'];
       delete routerFile['#config'];
       if(hasOwn(routerFile, '#tab')) {
-        const tab = {
-          ...routerFile['#tab'],
-          pagePath: routerFile.path
-        }
-        pagesJson.tabBar?.list.push(tab);
         delete routerFile['#tab'];
       }
       if(hasEntrance) {
@@ -40,11 +28,6 @@ export function getRoutersConfig(routersFilesPath: Array<string>) {
         pagesJson.pages.unshift(routerFile);
       }
     }else if(hasOwn(routerFile, '#tab')) {
-      const tab = {
-        ...routerFile['#tab'],
-        pagePath: routerFile.path
-      }
-      pagesJson.tabBar?.list.push(tab);
       delete routerFile['#tab'];
       if(routerFile['#config']) delete routerFile['#config'];
       pagesJson.pages.push(routerFile);

@@ -2,14 +2,14 @@ export interface SrcPagesJson {
   pages: Array<Pages>;
   subPackages?: Array<SubPackage>;
   globalStyle?: object;
-  tabBar?:TabBar;
+  tabBar?: TabBar;
 }
 
 export interface TabBar {
   list: Array<TabBarOfList>;
 }
 
-interface TabBarOfList {
+export interface TabBarOfList {
   iconPath?: string;
   selectedIconPath?: string;
   text?: string;
@@ -20,7 +20,7 @@ export interface Pages {
   path: string;
   style?: object;
   '#home'?: boolean;
-  '#tab'?:TabBarOfList;
+  '#tab'?: TabBarOfList;
   '#subPackage'?: SubPackage;
   '#config'?: object;
 }

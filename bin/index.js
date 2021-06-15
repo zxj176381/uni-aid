@@ -18,6 +18,10 @@ program.command('link').action(() => {
   bundle.link();
 });
 
+program.command('build').action(() => {
+  bundle.build();
+});
+
 program
   .command('add')
   .description('新建视图')

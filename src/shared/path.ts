@@ -3,12 +3,12 @@ import fs from 'fs-extra';
 import { SRC_PATH } from './constants';
 import { formatJson } from './util';
 
-function validateUniApp(){
+function validateUniApp() {
   let result: string = '';
   if (fs.pathExistsSync('manifest.json')) {
     result = 'hx';
   } else if (fs.pathExistsSync('src/manifest.json')) {
-    result = 'cli'
+    result = 'cli';
   }
   return result;
 }
@@ -20,7 +20,7 @@ export function isCli() {
 }
 
 // 获取pages.json
-export function getPagesJson(){
+export function getPagesJson() {
   const srcPagesJsonPath = SRC_PATH + 'pages.json';
   const pagesJsonString = fs.readFileSync(srcPagesJsonPath, 'utf-8');
   const pagesJsonContent: SrcPagesJson = formatJson(pagesJsonString);

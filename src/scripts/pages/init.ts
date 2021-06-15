@@ -1,26 +1,24 @@
-import { getPagesJson } from '@/shared';
-import { transformConfig, createServices, createPageAlias, createUniaid, createPageExclude } from '@/core';
+import { getPagesJson, addPageDir } from '@/shared';
+import { transformConfig, createUniAid, createPageAlias } from '@/core';
 
 function readPagesJson() {
   const pagesJsonContent = getPagesJson();
   return transformConfig(pagesJsonContent);
 }
 
-function createConfig() {
-  let pagesConfig = readPagesJson();
-  pagesConfig.forEach(pageConfig => {
-    createServices(pageConfig);
-  })
+function createPageAndConfig() {
+  const pagesConfig = readPagesJson();
+  pagesConfig.forEach((pageConfig) => {
+    addPageDir(pageConfig, 'init');
+  });
 }
 
-// 根据 page.json 创建对应的配置以及 services/routers/helpers 以及页面对应的 json 文件。
-export function init(){
-  createPageExclude()
-  let pagesConfig = readPagesJson();
+export function init() {
+  const pagesConfig = readPagesJson();
   // create json/helper/service
-  createConfig();
+  createPageAndConfig();
+  // create uniaid
+  createUniAid();
   // create alias
   createPageAlias(pagesConfig);
-  // create uniaid
-  createUniaid();
 }

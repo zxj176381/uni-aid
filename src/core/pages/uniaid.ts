@@ -1,18 +1,10 @@
-import { getPagesJson } from "@/shared";
-
+import { getPagesJson } from '@/shared';
 
 // 获取 TabBar
 export function getTabBar() {
   let pagesJsonContent = getPagesJson();
-  const tabBar = pagesJsonContent.tabBar;
-  if(tabBar) {
-    tabBar.list.forEach(tab => {
-      delete tab.iconPath;
-      delete tab.selectedIconPath;
-      delete tab.text;
-    })
-  }
-  return tabBar || {}
+  const tabBar = pagesJsonContent.tabBar || {};
+  return tabBar;
 }
 
 // 获取 globalStyle

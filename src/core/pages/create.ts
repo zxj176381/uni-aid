@@ -32,11 +32,11 @@ export function createPageAlias(pagesConfig: Array<Pages>) {
   pagesConfig.forEach((pageConfig, index) => {
     if (hasOwn(pageConfig, '#home')) {
       pagesPath['HOME_PAGE'] = pageConfig.path;
-      if(hasOwn(pageConfig, '#tab')) {
+      if (hasOwn(pageConfig, '#tab')) {
         pagesPath['TAB_LIST'].push(pageConfig.path);
       }
       return;
-    } 
+    }
     if (hasOwn(pageConfig, '#tab')) {
       pagesPath['TAB_LIST'].push(pageConfig.path);
     }
@@ -57,7 +57,7 @@ export function createPageAlias(pagesConfig: Array<Pages>) {
 // create routers/exclude.js
 export function createPageExclude() {
   const routersFilesPath = glob.sync(SRC_PATH + '*pages/**/*.json');
-  let excludeList:Exclude = {
+  let excludeList: Exclude = {
     login: [],
     phone: [],
   };
@@ -66,11 +66,11 @@ export function createPageExclude() {
     const excludeConfig = JSON.parse(pageBelowJson);
     const exclude = excludeConfig['#config'].exclude;
     const pagePath = excludeConfig.path;
-    if(exclude) {
+    if (exclude) {
       // TODO: any 不能为索引，后期找到解决方案补充。
       excludeList[exclude].push(pagePath);
     }
-  })
+  });
   let excludeTpl = `export default ${JSON.stringify(excludeList)}`;
   const excludePath = SRC_PATH + 'routers/exclude.js';
   excludeTpl = prettier.format(excludeTpl, {

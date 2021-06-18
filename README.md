@@ -18,6 +18,8 @@ $ npx uniaid add // 创建页面或者组件
 $ npx uniaid build // 根据pages文件夹下json配置文件变化，修改pages.json中的配置。
 
 $ npx uniaid watch // 监听pages文件夹下json配置文件变化，修改pages.json中的配置。
+
+$ npx uniaid link // 导出页面配置，主要用于后台管理页面配置的展示，前端开发人员可用此 json 文件开发APP等页面路径的展示。
 ```
 
 ## 注意事项

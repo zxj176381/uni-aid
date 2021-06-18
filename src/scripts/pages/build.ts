@@ -2,24 +2,24 @@ import glob from 'glob';
 import fs from 'fs-extra';
 import { getPagesJson, UNIAID_PATH, SRC_PATH, formatJson } from '@/shared';
 import { TabBarOfList } from '@/interface';
-import { createPageAlias, createPageExclude, getRoutersConfig, getUniaid, transformConfig } from '@/core';
+import { createPageAlias, createPageExclude, getRoutersConfig, getUniaid, transformConfig, getDirJsonConfig } from '@/core';
 
 function setPageConfigTabBar() {
   const tabBar = fs.readFileSync(`${SRC_PATH}/_uniaid/tabBar.json`, 'utf-8');
   const tabBarConfig = formatJson(tabBar);
   const { list } = tabBarConfig;
-  if(list && list.length > 1) {
+  if (list && list.length > 1) {
     list.forEach((item: TabBarOfList, index: Number) => {
       let jsonPath = `${SRC_PATH}${item.pagePath}.json`;
-      if(!fs.existsSync(jsonPath)) return;
+      if (!fs.existsSync(jsonPath)) return;
       let jsonConfig = formatJson(fs.readFileSync(jsonPath, 'utf-8'));
       jsonConfig['#tab'] = item;
       let config = JSON.parse(JSON.stringify(jsonConfig['#config']));
       delete jsonConfig['#config'];
       jsonConfig['#config'] = config;
       fs.outputJsonSync(jsonPath, jsonConfig, {
-        spaces: 2
-      })
+        spaces: 2,
+      });
     });
   }
 }
@@ -47,8 +47,8 @@ export function build() {
   // 创建路由拦截配置文件
   createPageExclude();
   // 创建页面路径别名文件
-  let pagesConfig = readPagesJson();
-  createPageAlias(pagesConfig);
+  let { linkJson } = getDirJsonConfig();
+  createPageAlias(linkJson);
   // _uniaid/tabBar 改变 PageJson 下的 #tab
   setPageConfigTabBar();
 }

@@ -3,73 +3,74 @@ import { hasOwn } from '@/shared';
 import { Pages, SubPackage } from '@/interface';
 
 export function getRoutersConfig(routersFilesPath: Array<string>) {
-  let pagesJson:any = {
-    pages: [],
-    subPackages: [],
-  }, routersFiles: Array<Pages> = [];
+  let pagesJson: any = {
+      pages: [],
+      subPackages: [],
+    },
+    routersFiles: Array<Pages> = [];
   routersFilesPath.forEach((routerFilePath) => {
     routersFiles.push(fs.readJsonSync(routerFilePath));
-  })
-  let hasEntrance = routersFiles.findIndex(routerFile => hasOwn(routerFile, '#entrance') === true);
-  routersFiles.forEach(routerFile => {
-    if(hasOwn(routerFile, '#entrance')) {
+  });
+  let hasEntrance = routersFiles.findIndex((routerFile) => hasOwn(routerFile, '#entrance') === true);
+  routersFiles.forEach((routerFile) => {
+    if (hasOwn(routerFile, '#entrance')) {
       delete routerFile['#entrance'];
       delete routerFile['#config'];
       pagesJson.pages.unshift(routerFile);
-    } else if(hasOwn(routerFile, '#home')) {
+    } else if (hasOwn(routerFile, '#home')) {
       delete routerFile['#home'];
       delete routerFile['#config'];
-      if(hasOwn(routerFile, '#tab')) {
+      if (hasOwn(routerFile, '#tab')) {
         delete routerFile['#tab'];
       }
-      if(hasEntrance) {
+      if (~hasEntrance) {
         pagesJson.pages.push(routerFile);
-      }else {
+      } else {
         pagesJson.pages.unshift(routerFile);
       }
-    }else if(hasOwn(routerFile, '#tab')) {
+    } else if (hasOwn(routerFile, '#tab')) {
       delete routerFile['#tab'];
-      if(routerFile['#config']) delete routerFile['#config'];
+      if (routerFile['#config']) delete routerFile['#config'];
       pagesJson.pages.push(routerFile);
-    }else if(hasOwn(routerFile, '#subPackage')) {
+    } else if (hasOwn(routerFile, '#subPackage')) {
       // #subPackage
-      const subPackageOfIndex = pagesJson.subPackages.findIndex((subPackage:SubPackage) => {
+      const subPackageOfIndex = pagesJson.subPackages.findIndex((subPackage: SubPackage) => {
         return subPackage.root === routerFile['#subPackage']?.root;
-      })
+      });
       const subPackagePath = routerFile.path.replace(routerFile['#subPackage']?.root || '', '');
-      if(~subPackageOfIndex) {
+      if (~subPackageOfIndex) {
         const page = {
           path: subPackagePath,
-          style: routerFile.style
+          style: routerFile.style,
         };
         pagesJson.subPackages[subPackageOfIndex].pages.push(page);
-      }else {
+      } else {
         const subPackage = {
           root: routerFile['#subPackage']?.root,
           pages: [
             {
               path: subPackagePath,
-              style: routerFile.style
-            }
-          ]
-        }
+              style: routerFile.style,
+            },
+          ],
+        };
         pagesJson.subPackages.push(subPackage);
       }
-    }else {
+    } else {
       // 基本页面
       delete routerFile['#config'];
       pagesJson.pages.push(routerFile);
     }
-  })
+  });
   return pagesJson;
 }
 
 export function getUniaid(uniaid: Array<string>) {
   let pagesJson: any = {};
-  uniaid.forEach(jsonPath => {
+  uniaid.forEach((jsonPath) => {
     const json = fs.readJsonSync(jsonPath);
     const keyName = jsonPath.replace(/^src\/_uniaid\//, '').replace(/\.json$/, '');
     pagesJson[keyName] = json;
-  })
+  });
   return pagesJson;
 }

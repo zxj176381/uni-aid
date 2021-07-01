@@ -24,6 +24,7 @@ export function addPageDir(pageConfig: Pages, type: string) {
     return;
   }
 
+  const pageVuePath = pageFilePath + '.vue';
   const pageJsonPath = pageFilePath + '.json';
   const pageHelperPath = pageFilePath + '.js';
   const pageServicePath = pageFilePath.replace('pages', 'service') + '.js';
@@ -39,9 +40,9 @@ export function addPageDir(pageConfig: Pages, type: string) {
   const isExist = PAGE_SUFFIX.every(item => {
     return fs.existsSync(pagePath + item) === false;
   })
-  if(isExist) {
+  if (isExist && !fs.existsSync(pageVuePath)) {
     fs.outputFileSync(SRC_PATH + pagePath + PAGE_SUFFIX[0], VUE_TPL, 'utf-8')
-    logSuccess('create ' + pagePath);
+    logSuccess('create ' + pageVuePath);
   }
   // create helpers
   if (!fs.existsSync(pageHelperPath)) {

@@ -59,16 +59,24 @@ export function createPageExclude() {
   const routersFilesPath = glob.sync(SRC_PATH + '*pages/**/*.json');
   let excludeList: Exclude = {
     login: [],
-    phone: [],
+    phone: []
   };
+  let wechat: Array<string> = []
   routersFilesPath.forEach((item, index) => {
     const pageBelowJson = fs.readFileSync(item, 'utf-8');
     const excludeConfig = JSON.parse(pageBelowJson);
     const exclude = excludeConfig['#config'].exclude;
+    const authWxChat = excludeConfig['#config'].wechat;
     const pagePath = excludeConfig.path;
     if (exclude) {
       // TODO: any 不能为索引，后期找到解决方案补充。
       excludeList[exclude].push(pagePath);
+    }
+    if (authWxChat) {
+      wechat.push(pagePath)
+    }
+    if (wechat.length > 0) {
+      excludeList.wechat = wechat
     }
   });
   let excludeTpl = `export default ${JSON.stringify(excludeList)}`;

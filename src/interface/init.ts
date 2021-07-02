@@ -33,4 +33,5 @@ export interface SubPackage {
 export interface Exclude {
   login?: Array<string>;
   phone?: Array<string>;
+  wechat?: Array<string>;
 }

@@ -2,17 +2,25 @@ import glob from 'glob';
 import fs from 'fs-extra';
 import { getPagesJson, UNIAID_PATH, SRC_PATH, formatJson } from '@/shared';
 import { TabBarOfList } from '@/interface';
-import { createPageAlias, createPageExclude, getRoutersConfig, getUniaid, transformConfig, getDirJsonConfig } from '@/core';
+import {
+  createPageAlias,
+  createPageExclude,
+  getRoutersConfig,
+  getUniaid,
+  transformConfig,
+  getDirJsonConfig,
+} from '@/core';
 
 function setPageConfigTabBar() {
   const tabBar = fs.readFileSync(`${SRC_PATH}/_uniaid/tabBar.json`, 'utf-8');
   const tabBarConfig = formatJson(tabBar);
   const { list } = tabBarConfig;
-  if (list && list.length > 1) {
+  if (list && list.length > 0) {
     list.forEach((item: TabBarOfList, index: Number) => {
       let jsonPath = `${SRC_PATH}${item.pagePath}.json`;
       if (!fs.existsSync(jsonPath)) return;
       let jsonConfig = formatJson(fs.readFileSync(jsonPath, 'utf-8'));
+      delete item.pagePath;
       jsonConfig['#tab'] = item;
       let config = JSON.parse(JSON.stringify(jsonConfig['#config']));
       delete jsonConfig['#config'];
@@ -27,8 +35,8 @@ function setPageConfigTabBar() {
 function getNewPagesJson() {
   const uniaid = glob.sync(`${UNIAID_PATH}/*.json`);
   let routersFilesPath = glob.sync(SRC_PATH + '*pages/**/*.json');
-  const routersConfig = getRoutersConfig(routersFilesPath);
   const uniaidConfig = getUniaid(uniaid);
+  const routersConfig = getRoutersConfig(routersFilesPath, uniaidConfig);
   const pagesJson = Object.assign(routersConfig, uniaidConfig);
   const pagesJsonPath = SRC_PATH + 'pages.json';
   fs.outputJsonSync(pagesJsonPath, pagesJson, {

@@ -16,13 +16,22 @@ export interface TabBarOfList {
   pagePath?: string;
 }
 
+interface $Config {
+  name?: string,
+  author?: string,
+  description?: string,
+  exclude?: string,
+  wechat?: boolean,
+  using?: boolean
+}
+
 export interface Pages {
   path: string;
   style?: object;
   '#home'?: boolean;
   '#tab'?: TabBarOfList;
   '#subPackage'?: SubPackage;
-  '#config'?: object;
+  '#config'?: $Config;
 }
 
 export interface SubPackage {

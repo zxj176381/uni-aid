@@ -30,6 +30,9 @@ export function createPageAlias(pagesConfig: Array<Pages>) {
     TAB_LIST: [],
   };
   pagesConfig.forEach((pageConfig, index) => {
+    if (pageConfig['#config'] && hasOwn(pageConfig['#config'], 'using') && !pageConfig['#config'].using) {
+      return;
+    }
     if (hasOwn(pageConfig, '#home')) {
       pagesPath['HOME_PAGE'] = pageConfig.path;
       if (hasOwn(pageConfig, '#tab')) {
@@ -59,9 +62,9 @@ export function createPageExclude() {
   const routersFilesPath = glob.sync(SRC_PATH + '*pages/**/*.json');
   let excludeList: Exclude = {
     login: [],
-    phone: []
+    phone: [],
   };
-  let wechat: Array<string> = []
+  let wechat: Array<string> = [];
   routersFilesPath.forEach((item, index) => {
     const pageBelowJson = fs.readFileSync(item, 'utf-8');
     const excludeConfig = JSON.parse(pageBelowJson);
@@ -73,10 +76,10 @@ export function createPageExclude() {
       excludeList[exclude].push(pagePath);
     }
     if (authWxChat) {
-      wechat.push(pagePath)
+      wechat.push(pagePath);
     }
     if (wechat.length > 0) {
-      excludeList.wechat = wechat
+      excludeList.wechat = wechat;
     }
   });
   let excludeTpl = `export default ${JSON.stringify(excludeList)}`;

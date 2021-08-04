@@ -3,7 +3,7 @@ import glob from 'glob';
 import prettier from 'prettier';
 import { Pages, Exclude } from '@/interface';
 import { getTabBar, getGlobalStyle } from '@/core';
-import { UNIAID_PATH, SRC_PATH, logSuccess, hasOwn } from '@/shared';
+import { UNIAID_PATH, SRC_PATH, logSuccess, hasOwn, isStr, isArray } from '@/shared';
 
 // create uniaid
 export function createUniAid() {
@@ -63,23 +63,26 @@ export function createPageExclude() {
   let excludeList: Exclude = {
     login: [],
     phone: [],
+    teacher: [],
+    student: [],
   };
-  let wechat: Array<string> = [];
   routersFilesPath.forEach((item, index) => {
     const pageBelowJson = fs.readFileSync(item, 'utf-8');
-    const excludeConfig = JSON.parse(pageBelowJson);
-    const exclude = excludeConfig['#config'].exclude;
-    const authWxChat = excludeConfig['#config'].wechat;
-    const pagePath = excludeConfig.path;
+    const config = JSON.parse(pageBelowJson);
+    const exclude = config['#config'].exclude;
+    const role = config['#config'].role;
+    const pagePath = config.path;
     if (exclude) {
-      // TODO: any 不能为索引，后期找到解决方案补充。
       excludeList[exclude].push(pagePath);
     }
-    if (authWxChat) {
-      wechat.push(pagePath);
-    }
-    if (wechat.length > 0) {
-      excludeList.wechat = wechat;
+    if (role) {
+      if (isStr(role)) {
+        excludeList[role].push(pagePath);
+      } else if (isArray(role)) {
+        role.forEach((item:string) => {
+          excludeList[item].push(pagePath);
+        })
+      }
     }
   });
   let excludeTpl = `export default ${JSON.stringify(excludeList)}`;

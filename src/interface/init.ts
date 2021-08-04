@@ -43,4 +43,6 @@ export interface Exclude {
   login?: Array<string>;
   phone?: Array<string>;
   wechat?: Array<string>;
+  teacher?: Array<string>;
+  student?: Array<string>;
 }

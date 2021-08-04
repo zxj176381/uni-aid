@@ -16,6 +16,19 @@ export function getDirJsonConfig() {
         ...data,
         '#home': pageBelowJson['#home'],
       };
+      if (pageBelowJson['#tab']) {
+        data = {
+          ...data,
+          '#tab': pageBelowJson['#tab']
+        }
+      }
+    } else {
+      if (pageBelowJson['#tab']) {
+        data = {
+          ...data,
+          '#tab': pageBelowJson['#tab']
+        }
+      }
     }
     if (pageBelowJson['#entrance']) {
       data = {

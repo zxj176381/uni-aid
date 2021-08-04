@@ -6,7 +6,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 let projectPath = '';
 
 if (process.env.ADDRESS === 'home') {
-  projectPath = 'F:/project/Calligraphy_App/node_modules/uni-aid/dist';
+  projectPath = 'F:/project/Calligraphy_App/node_modules/gjt_uni-aid/dist';
 }
 
 module.exports = {

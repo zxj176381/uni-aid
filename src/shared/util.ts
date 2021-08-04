@@ -1,5 +1,19 @@
 import JSONMinify from 'jsonminify';
 
+// 检测 Array 类型
+export function isArray (obj: object) {
+  if (Array.isArray) {
+	return Array.isArray(obj);
+  } else {
+	return obj instanceof Array;
+  }
+}
+
+// 检测 String 类型
+export function isStr (obj: string) {
+  return typeof obj === 'string';
+}
+
 // 压缩JSON
 export function formatJson(json:string){
   return JSON.parse(JSONMinify(json))

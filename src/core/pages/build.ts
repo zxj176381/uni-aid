@@ -3,9 +3,6 @@ import { hasOwn, SRC_PATH } from '@/shared';
 import { Pages, SubPackage, TabBarOfList } from '@/interface';
 
 export function getRoutersConfig(routersFilesPath: Array<string>, uniaidConfig: any) {
-  const tabBarListPath = uniaidConfig.tabBar.list.map((item: TabBarOfList) => {
-    return item.pagePath;
-  });
   let pagesJson: any = {
       pages: [],
       subPackages: [],
@@ -26,11 +23,6 @@ export function getRoutersConfig(routersFilesPath: Array<string>, uniaidConfig: 
     } else if (hasOwn(routerFile, '#home')) {
       if (hasOwn(routerFile, '#tab')) {
         delete routerFile['#tab'];
-        if (!~tabBarListPath.indexOf(routerFile.path)) {
-          fs.outputJsonSync(`${SRC_PATH}${routerFile.path}.json`, routerFile, {
-            spaces: 2,
-          });
-        }
       }
       delete routerFile['#home'];
       delete routerFile['#config'];
@@ -41,11 +33,6 @@ export function getRoutersConfig(routersFilesPath: Array<string>, uniaidConfig: 
       }
     } else if (hasOwn(routerFile, '#tab')) {
       delete routerFile['#tab'];
-      if (~tabBarListPath.indexOf(routerFile.path)) {
-        fs.outputJsonSync(`${SRC_PATH}${routerFile.path}.json`, routerFile, {
-          spaces: 2,
-        });
-      }
       if (routerFile['#config']) delete routerFile['#config'];
       pagesJson.pages.push(routerFile);
     } else if (hasOwn(routerFile, '#subPackage')) {
